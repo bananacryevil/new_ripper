@@ -94,13 +94,13 @@ func processBatch(batch []Episode) {
 	// We use a headful mode (not headless) if possible, or headless if on server.
 	// The user asked for "regular fucking browser", but we are in a remote env likely.
 	// We will try to use ExecAllocator to launch a browser.
-
-	// Use the Chromium binary installed by Playwright
-	execPath := "/home/bryan/.cache/ms-playwright/chromium-1194/chrome-linux/chrome"
-
+	
+	// By default, chromedp looks for chrome/chromium in standard locations.
+	// If you need to specify a path, use chromedp.ExecPath("/path/to/chrome")
+	
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
-		chromedp.ExecPath(execPath),
-		chromedp.Flag("headless", true), // Keep headless for stability in this env
+		chromedp.ExecPath("/usr/bin/chromium"), // Explicitly use the installed chromium
+		chromedp.Flag("headless", true), // Run headless as requested
 		chromedp.Flag("disable-gpu", true),
 		chromedp.Flag("no-sandbox", true),
 		chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"),
